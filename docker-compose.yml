@@ -1,9 +1,9 @@
+version: "3"
+
 services:
+
   mongo:
-    image: database
-    build:
-      context: ./mongo
-      dockerfile: Dockerfile
+    image: mongo
     container_name: mongo
     ports:
       - "27017:27017"
@@ -11,10 +11,7 @@ services:
       - mongo_data:/data/db
 
   backend:
-    image: backend
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    image: srushtii13/backend:latest
     container_name: backend
     ports:
       - "8080:8080"
@@ -25,10 +22,7 @@ services:
       - mongo
 
   frontend:
-    image: frontend
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    image: srushtii13/frontend:latest
     container_name: frontend
     ports:
       - "3000:3000"
