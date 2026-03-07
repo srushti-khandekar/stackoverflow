@@ -10,10 +10,19 @@ const connect = url => {
 };
 
 if (require.main === module) {
-  app.listen(config.port);
-  connect(config.db.prod);
+  // Use '0.0.0.0' so the EC2 can route traffic to the container
+  app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
+  });
+
+  connect(dbUrl)
+    .then(() => console.log("Connected to MongoDB successfully"))
+    .catch(err => {
+      console.log("MongoDB Connection Error Details:", err);
+      process.exit(1); // Stop the container if DB fails
+    });
+
   mongoose.connection.on('error', console.log);
 }
 
 module.exports = { connect };
-
