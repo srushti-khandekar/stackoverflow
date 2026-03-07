@@ -53,6 +53,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app
+            docker network inspect stack-network >/dev/null 2>&1 || docker network create stack-network
             # Create a network if it doesn't exist
             docker network create stack-network || true
             # Stop everything and remove orphans (fixes your conflict error)
