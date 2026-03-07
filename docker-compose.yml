@@ -16,7 +16,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_URL=mongodb://mongo:27017/stackoverflow
+      - CONNECTION_URL=mongodb://mongo:27017/stackoverflow
       - PORT=8080
     depends_on:
       - mongo

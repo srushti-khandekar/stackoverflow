@@ -53,6 +53,12 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/app
-            docker-compose down
+            # Create a network if it doesn't exist
+            docker network create stack-network || true
+            # Stop everything and remove orphans (fixes your conflict error)
+            docker-compose down --remove-orphans
+            # Explicitly remove the mongo container to be 100% safe
+            docker rm -f mongo || true
             docker-compose pull
-            docker-compose up -d --remove-orphans
+            # Start containers
+            docker-compose up -d
